@@ -4,22 +4,30 @@
 
 int my_strlen(const char *str)
 {
-	/* TODO */
-	(void) str;
-
-	return -1;
+	int cnt = 0;
+	while (*(str + cnt)) {
+		++cnt;
+	}
+	return cnt;
 }
 
 void equality_check(const char *str)
 {
-	/* TODO */
-	(void) str;
+	int n = my_strlen(str), i = 0;
+	while (i < n) {
+		if (!((*(str + i)) ^ (*(str + (i + (1 << i)) % n)))) {
+			printf("Addresses of %c: %p and %p\n", *(str + i), str + i, str + (i + (1 << i)) % n);
+		}
+		++i;
+	}
 }
 
 int main(void)
 {
-	/* TODO: Test functions */
-
+	char s[100];
+	scanf("%s", s);
+	printf("%d\n", my_strlen(s));
+	equality_check(s);
 	return 0;
 }
 
