@@ -2,22 +2,28 @@
 
 void rotate_left(int *number, int bits)
 {
-	/* TODO */
-	(void) number;
-	(void) bits;
+	const int size = sizeof(int) * 8;
+	bits %= size;
+	int mask = (*number) >> (size - bits);
+	*number <<= bits;
+	*number |= mask;
 }
 
 void rotate_right(int *number, int bits)
 {
-	/* TODO */
-	(void) number;
-	(void) bits;
+	const int size = sizeof(int) * 8;
+	bits %= size;
+	int mask = (*number) << (size - bits);
+	*number >>= bits;
+	*number |= mask;
 }
 
 int main()
 {
-	/* TODO: Test functions */
-
+	int n;
+	scanf("%d", &n);
+	rotate_right(&n, 1);
+	printf("%d\n", n);
 	return 0;
 }
 
