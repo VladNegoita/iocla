@@ -18,25 +18,25 @@
 void *find_max(void *arr, int n, int element_size, 
 				int (*compare)(const void *, const void *)) {
 	void *max_elem = arr;
+
+	for (int i = 1; i < n; ++i) {
+		if (compare(arr + i * element_size, max_elem))
+			max_elem = arr + i * element_size;
+	}
+
 	return max_elem;
 }
 
-/*
-	a si b sunt doi pointeri la void, dar se specifica in enunt
-	ca datele de la acele adrese sunt de tip int, asadar trebuie
-	castati.
-	Functia returneaza 1 daca valorea de la adresa lui a este mai
-	mare decat cea de la adresa lui b, in caz contrar returneaza 0.
-*/
+int compare(const void *a, const void *b)
+{
+	int *x = (int *)a;
+	int *y = (int *)b;
 
-int compare(const void *a, const void *b);
+	if (*x > *y)
+		return 1;
+	return 0;
+}
 
-/*
-	Se citeste de la tastatura un vector si se cere sa se afle
-	elementul maxim folosind functia find_max.
-	Rezultatul functiei find_max trebuie cast la int, spre exemplu:
-	int *res = (*int) find_max(...);
-*/
 int main() {
 	int n;
 	scanf("%d", &n);
@@ -44,7 +44,9 @@ int main() {
 	int *arr = malloc(n * sizeof(*arr));
 
 	for (int i = 0 ; i < n; ++i)
-		scanf("%d", &arr[i]);       
+		scanf("%d", &arr[i]);
+
+	printf("%d\n", *((int *)find_max(arr, n, sizeof(int), compare)));   
 
 	free(arr);
 	return 0;
