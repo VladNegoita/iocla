@@ -10,6 +10,7 @@ ASFLAGS = -f elf32
 all: hello
 
 hello: hello.o start.o puts.o
+	ld -static -m elf_i386 -o $@ $< --start-group start.o puts.o --end-group
 
 hello.o: hello.c
 
