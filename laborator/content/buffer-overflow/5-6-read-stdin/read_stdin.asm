@@ -4,6 +4,7 @@
 ; Fill buffer with data from standard input.
 ; Buffer is stored on the stack.
 ;
+; AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFLOW
 
 extern printf
 extern puts
