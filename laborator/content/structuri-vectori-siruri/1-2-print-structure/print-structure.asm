@@ -43,6 +43,11 @@ main:
     ; age is 22
     ; group is '323CA'
 
+    mov word [sample_student + 74], 1993
+    mov byte [sample_student + 64], 22
+    mov byte [sample_student + 67], '3'
+
+
     lea ebx, [string_name]
     push ebx
     push string_format

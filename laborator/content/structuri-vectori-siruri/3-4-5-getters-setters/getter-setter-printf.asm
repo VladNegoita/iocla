@@ -39,6 +39,10 @@ get_int:
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the int's value to `eax` to return it
 
+    mov ebx, [ebp + 8]
+    add ebx, int_x
+    mov eax, [ebx]
+
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
     leave
@@ -56,6 +60,12 @@ get_char:
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the char's value to `eax` to return it.
+
+    xor eax, eax
+
+    mov ebx, [ebp + 8]
+    add ebx, char_y
+    mov al, byte [ebx]
 
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
@@ -75,6 +85,10 @@ get_string:
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the string's address to `eax` to return it.
 
+    mov ebx, [ebp + 8]
+    add ebx, string_s
+    mov eax, ebx
+
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
     leave
@@ -91,6 +105,12 @@ set_int:
 
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
+
+    mov edx, [ebp + 12]
+
+    mov ebx, [ebp + 8]
+    add ebx, int_x
+    mov [ebx], edx
 
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
@@ -109,6 +129,12 @@ set_char:
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
 
+    mov dl, byte [ebp + 12]
+
+    mov ebx, [ebp + 8]
+    add ebx, char_y
+    mov [ebx], byte dl
+
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
     leave
@@ -125,6 +151,27 @@ set_string:
 
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
+
+    mov edx, [ebp + 12] ;pointer to *new_string
+
+    mov ebx, [ebp + 8]
+    add ebx, string_s ;pointer to *dest string
+
+    xor eax, eax
+
+copy:
+    mov al, byte [edx]
+    mov [ebx], byte al
+    inc ebx
+    inc edx
+
+    mov al, byte [edx]
+    
+    cmp eax, 0
+    jnz copy
+
+    mov al, byte [edx]
+    mov [ebx], byte al
 
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
@@ -146,10 +193,10 @@ main:
     add esp, 4
 
     ;uncomment when get_int is ready
-    ;push eax
-    ;push int_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push int_format
+    call printf
+    add esp, 8
 
     movzx edx, byte [new_char]
     ; movzx is the same as
@@ -165,10 +212,10 @@ main:
     add esp, 4
 
     ;uncomment when get_char is ready
-    ;push eax
-    ;push char_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push char_format
+    call printf
+    add esp, 8
 
     mov edx, new_string
     push edx
@@ -181,10 +228,10 @@ main:
     add esp, 4
 
     ;uncomment when get_string is ready
-    ;push eax
-    ;push string_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push string_format
+    call printf
+    add esp, 8
 
     xor eax, eax
     leave
