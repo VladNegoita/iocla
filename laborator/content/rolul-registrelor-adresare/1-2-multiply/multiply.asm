@@ -27,10 +27,29 @@ main:
     PRINTF32 `%s\x0`, print_mesaj
     xor ebx, ebx
     mov bx, ax
-    PRINTF32 `%hx\n\x0`, eax
+    PRINTF32 `%hd\n\x0`, eax
 
 
-   ; TODO: Implement multiplication for dw and dd data types.
+    ; TODO: Implement multiplication for dw and dd data types.
+    xor eax, eax
+    xor ebx, ebx
+    xor edx, edx
+    mov ax, word [num1_w]
+    mov bx, word [num2_w]
+    mul bx
+    PRINTF32 `%s\x0`, print_mesaj
+    PRINTF32 `%x\x0`, edx
+    PRINTF32 `%x\n\x0`, eax
+
+    xor eax, eax
+    xor ebx, ebx
+    xor edx, edx
+    mov eax, dword [num1_d]
+    mov ebx, dword [num2_d]
+    mul ebx
+    PRINTF32 `%s\x0`, print_mesaj
+    PRINTF32 `%x\x0`, edx
+    PRINTF32 `%x\n\x0`, eax
 
     leave
     ret
